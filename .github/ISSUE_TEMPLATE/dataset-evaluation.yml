@@ -1,0 +1,51 @@
+name: Dataset evaluation
+description: Audit dataset provenance, quality, licensing, and suitability.
+title: "[Dataset evaluation]: "
+labels: ["team:data", "type:research"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Dataset and evaluation question
+      description: Link public source pages only. Do not attach data samples containing people.
+    validations:
+      required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Responsible team
+      options: ["Data & intelligent inputs", "AI & NLP", "QA / integration"]
+    validations:
+      required: true
+  - type: input
+    id: assignee
+    attributes:
+      label: Assignee (member ID or GitHub username)
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: [High, Medium, Low]
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Expected deliverable
+      description: Include source, license, consent/provenance, quality, bias/coverage, storage and redistribution constraints.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] License and privacy constraints recorded; suitability decision documented"
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline
+      placeholder: YYYY-MM-DD or milestone
+    validations:
+      required: true

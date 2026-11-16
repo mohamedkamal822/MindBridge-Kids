@@ -1,0 +1,49 @@
+name: Documentation task
+description: Improve project, module, API, or research documentation.
+title: "[Docs]: "
+labels: ["type:documentation"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description and audience
+    validations:
+      required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Responsible team
+      options: ["AI & NLP", "Mobile app", "Backend & database", "Data & intelligent inputs", "QA / integration"]
+    validations:
+      required: true
+  - type: input
+    id: assignee
+    attributes:
+      label: Assignee (member ID or GitHub username)
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: [High, Medium, Low]
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Expected deliverable
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Instructions are accurate and reviewed by the owner"
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline
+      placeholder: YYYY-MM-DD or milestone
+    validations:
+      required: true

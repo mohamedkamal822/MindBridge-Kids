@@ -1,0 +1,50 @@
+name: Testing task
+description: Add or coordinate a test plan, test suite, or evaluation.
+title: "[Testing]: "
+labels: ["type:testing"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Scope and risks to cover
+      description: Prefer deterministic tests and synthetic fixtures; no real child data.
+    validations:
+      required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Responsible team
+      options: ["QA / integration", "AI & NLP", "Mobile app", "Backend & database", "Data & intelligent inputs"]
+    validations:
+      required: true
+  - type: input
+    id: assignee
+    attributes:
+      label: Assignee (member ID or GitHub username)
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: [High, Medium, Low]
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Expected deliverable
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Scope executes reproducibly and results are documented"
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline
+      placeholder: YYYY-MM-DD or milestone
+    validations:
+      required: true

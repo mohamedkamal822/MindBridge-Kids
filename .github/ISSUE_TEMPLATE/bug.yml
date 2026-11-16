@@ -1,0 +1,56 @@
+name: Bug report
+description: Report a reproducible defect.
+title: "[Bug]: "
+labels: ["type:bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Explain what happened and why it is incorrect. Never attach real child data, secrets, or recordings.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Responsible team
+      options: ["AI & NLP", "Mobile app", "Backend & database", "Data & intelligent inputs", "QA / integration"]
+    validations:
+      required: true
+  - type: input
+    id: assignee
+    attributes:
+      label: Assignee (member ID or GitHub username)
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: [High, Medium, Low]
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Expected deliverable
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Bug no longer reproduces; regression coverage added where applicable"
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline
+      placeholder: YYYY-MM-DD or milestone
+    validations:
+      required: true

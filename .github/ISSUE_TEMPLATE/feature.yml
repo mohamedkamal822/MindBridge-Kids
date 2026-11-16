@@ -1,0 +1,52 @@
+name: Feature request
+description: Propose a product or engineering capability.
+title: "[Feature]: "
+labels: ["type:feature"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Explain the user need and proposed behavior. Do not include personal or child data.
+    validations:
+      required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Responsible team
+      options: ["AI & NLP", "Mobile app", "Backend & database", "Data & intelligent inputs", "QA / integration"]
+    validations:
+      required: true
+  - type: input
+    id: assignee
+    attributes:
+      label: Assignee (member ID or GitHub username)
+      placeholder: "M1; leave username blank until provided"
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: [High, Medium, Low]
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Expected deliverable
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Observable, testable outcome"
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline
+      description: Agree with the team; use YYYY-MM-DD or milestone.
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true

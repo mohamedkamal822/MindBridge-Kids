@@ -1,0 +1,106 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  detect:
+    name: Detect implemented modules
+    runs-on: ubuntu-latest
+    outputs:
+      flutter: ${{ steps.modules.outputs.flutter }}
+      python: ${{ steps.modules.outputs.python }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: modules
+        shell: bash
+        run: |
+          if find . -name pubspec.yaml -not -path '*/.git/*' -not -path '*/.dart_tool/*' -print -quit | grep -q .; then
+            echo "flutter=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "flutter=false" >> "$GITHUB_OUTPUT"
+          fi
+          if find . -name '*.py' -not -path '*/.git/*' -print -quit | grep -q .; then
+            echo "python=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "python=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  flutter:
+    name: Flutter checks
+    needs: detect
+    if: needs.detect.outputs.flutter == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2.23.0
+        with:
+          channel: stable
+          cache: true
+      - name: Analyze and test each Flutter package
+        shell: bash
+        run: |
+          mapfile -d '' manifests < <(find . -name pubspec.yaml -not -path '*/.git/*' -not -path '*/.dart_tool/*' -print0)
+          for manifest in "${manifests[@]}"; do
+            package_dir="$(dirname "$manifest")"
+            echo "Checking $package_dir"
+            (cd "$package_dir" && flutter pub get && flutter analyze)
+            if [ -d "$package_dir/test" ]; then
+              (cd "$package_dir" && flutter test)
+            else
+              echo "No Flutter test/ directory in $package_dir; skipping flutter test."
+            fi
+          done
+
+  python:
+    name: Python checks
+    needs: detect
+    if: needs.detect.outputs.python == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - name: Install declared module dependencies
+        shell: bash
+        run: |
+          shopt -s globstar nullglob
+          manifests=(**/requirements.txt)
+          for manifest in "${manifests[@]}"; do
+            echo "Installing $manifest"
+            python -m pip install -r "$manifest"
+          done
+          pyprojects=(**/pyproject.toml)
+          for manifest in "${pyprojects[@]}"; do
+            if grep -Eq '^\[project\]' "$manifest"; then
+              python -m pip install "$(dirname "$manifest")"
+            fi
+          done
+      - name: Compile Python modules
+        run: python -m compileall -q .
+      - name: Lint when Ruff is configured
+        shell: bash
+        run: |
+          if [ -f ruff.toml ] || [ -f .ruff.toml ] || grep -Rql '^\[tool\.ruff' --include=pyproject.toml --exclude-dir=.git .; then
+            python -m pip install ruff
+            ruff check .
+          else
+            echo "Ruff is not configured; skipping lint."
+          fi
+      - name: Run pytest when tests exist
+        shell: bash
+        run: |
+          if find . -type f \( -name 'test_*.py' -o -name '*_test.py' \) -not -path '*/.git/*' -print -quit | grep -q .; then
+            python -m pip install pytest
+            pytest -q
+          else
+            echo "No Python test files found; skipping pytest."
+          fi

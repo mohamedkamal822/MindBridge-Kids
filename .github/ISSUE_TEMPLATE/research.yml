@@ -1,0 +1,50 @@
+name: Research task
+description: Plan a time-bounded investigation with a documented result.
+title: "[Research]: "
+labels: ["type:research"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Research question and context
+    validations:
+      required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Responsible team
+      options: ["AI & NLP", "Mobile app", "Backend & database", "Data & intelligent inputs", "QA / integration"]
+    validations:
+      required: true
+  - type: input
+    id: assignee
+    attributes:
+      label: Assignee (member ID or GitHub username)
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: [High, Medium, Low]
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Expected deliverable
+      description: Include evidence, limitations, and decision criteria; do not upload restricted datasets.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Reproducible findings and recommendation documented"
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline
+      placeholder: YYYY-MM-DD or milestone
+    validations:
+      required: true

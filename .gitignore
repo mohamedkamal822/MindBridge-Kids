@@ -30,6 +30,9 @@ analysis_benchmark.json
 .packages.generated
 
 # Flutter/Dart/Pub related
+# Keep application lockfiles under version control for reproducible Flutter builds.
+!pubspec.lock
+!**/pubspec.lock
 **/doc/api/
 .dart_tool/
 .flutter-plugins
@@ -121,3 +124,67 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+!.env.template
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.template
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+secrets/
+.secrets/
+
+# Python and local services
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Local data, child records, recordings and restricted research data
+data/raw/
+data/private/
+datasets/private/
+datasets/restricted/
+**/private_data/
+**/child_data/
+**/recordings/
+**/raw_audio/
+**/raw_video/
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.mp4
+*.mov
+*.webm
+*.avi
+
+# Model artifacts; distribute only through an approved, documented process
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.keras
+*.tflite
+*.onnx
+*.safetensors
+models/checkpoints/
+checkpoints/
